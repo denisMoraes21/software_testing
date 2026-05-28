@@ -1,6 +1,7 @@
 from flask import Flask
-from app.database import Database
+from app.database import db
 from enum import StrEnum
+from app.routes.user_routes import user_bp
 
 
 class DatabaseConfig(StrEnum):
@@ -40,10 +41,12 @@ class App:
             _app.config[DatabaseConfig.URI] = DatabaseConfig.DATABASE_URI
             _app.config[DatabaseConfig.MODIFICATIONS] = False
 
-            _database = Database().get_db()
+            _database = db
             _database.init_app(_app)
 
             with _app.app_context():
                 _database.create_all()
+
+            _app.register_blueprint(user_bp, url_prefix="/api")
 
         return cls.get_instance()

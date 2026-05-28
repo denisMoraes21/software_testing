@@ -29,6 +29,10 @@ class Database:
         return cls.get_instance()
 
 
+# Init database instance
+db = Database().get_db()
+
+
 if __name__ == "__main__":
     db_2 = Database().get_db()
     db_1 = Database().get_db()
