@@ -1,6 +1,5 @@
 import unittest
 import requests
-import time
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -24,16 +23,16 @@ class TestUsersE2E(unittest.TestCase):
 
     def test_register_user(self):
         self.driver.get(f"{self.BASE_URL}{self.REGISTER_PAGE_ENDPOINT}")
-        time.sleep(2)
+        # time.sleep(2)
 
         username = self.driver.find_element(By.ID, "create-name")
 
         username.send_keys("Denis")
 
-        time.sleep(2)
+        # time.sleep(2)
 
         submit = self.driver.find_element(By.ID, "button-create")
-        time.sleep(2)
+        # time.sleep(2)
 
         submit.click()
 
@@ -42,7 +41,7 @@ class TestUsersE2E(unittest.TestCase):
         alert = wait.until(
             EC.alert_is_present()
         )
-        time.sleep(2)
+        # time.sleep(2)
 
         self.assertEqual(
             alert.text,
@@ -69,16 +68,16 @@ class TestUsersE2E(unittest.TestCase):
         )
 
         self.driver.get(f"{self.BASE_URL}{self.REGISTER_PAGE_ENDPOINT}")
-        time.sleep(2)
+        # time.sleep(2)
 
         username = self.driver.find_element(By.ID, "delete-id")
 
         username.send_keys(1)
 
-        time.sleep(2)
+        # time.sleep(2)
 
         submit = self.driver.find_element(By.ID, "button-delete")
-        time.sleep(2)
+        # time.sleep(2)
 
         submit.click()
 
@@ -87,7 +86,7 @@ class TestUsersE2E(unittest.TestCase):
         alert = wait.until(
             EC.alert_is_present()
         )
-        time.sleep(2)
+        # time.sleep(2)
 
         self.assertEqual(
             alert.text,

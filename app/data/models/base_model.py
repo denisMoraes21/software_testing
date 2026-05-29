@@ -1,5 +1,5 @@
 from app.database import db
-from datetime import datetime
+from datetime import datetime, UTC
 
 
 class BaseModel(db.Model):
@@ -12,14 +12,14 @@ class BaseModel(db.Model):
 
     created_at = db.Column(
         db.DateTime,
-        default=datetime.utcnow,
+        default=datetime.now(UTC),
         nullable=False
     )
 
     updated_at = db.Column(
         db.DateTime,
-        default=datetime.utcnow,
-        onupdate=datetime.utcnow,
+        default=datetime.now(UTC),
+        onupdate=datetime.now(UTC),
         nullable=False
     )
 
