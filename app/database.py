@@ -29,13 +29,45 @@ class Database:
         return cls.get_instance()
 
 
-# Init database instance
 db = Database().get_db()
 
 
-if __name__ == "__main__":
-    db_2 = Database().get_db()
-    db_1 = Database().get_db()
+class Pessoa(db.Model):
 
-    # Check singleton design
-    assert db_1 == db_2
+    __tablename__ = "pessoas"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    nome_completo = db.Column(
+        db.String(150),
+        nullable=False
+    )
+
+    cpf = db.Column(
+        db.String(14),
+        unique=True,
+        nullable=False
+    )
+
+    data_nascimento = db.Column(
+        db.String(10),
+        nullable=False
+    )
+
+    sexo = db.Column(
+        db.String(20),
+        nullable=False
+    )
+
+    estado_civil = db.Column(
+        db.String(30),
+        nullable=False
+    )
+
+    nacionalidade = db.Column(
+        db.String(50),
+        nullable=False
+    )
+
+    def __repr__(self):
+        return f"<Pessoa {self.nome_completo}>"

@@ -2,6 +2,7 @@ from flask import Flask
 from app.database import db
 from enum import StrEnum
 from app.routes.user_routes import user_bp
+from app.routes.pessoa_routes import pessoa_bp
 
 
 class DatabaseConfig(StrEnum):
@@ -48,5 +49,6 @@ class App:
                 _database.create_all()
 
             _app.register_blueprint(user_bp, url_prefix="/users")
+            _app.register_blueprint(pessoa_bp, url_prefix="/pessoas")
 
         return cls.get_instance()
