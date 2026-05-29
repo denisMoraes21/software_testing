@@ -1,10 +1,10 @@
-from flask import Blueprint, request
-from app.services.user_service import UserService
+from flask import Blueprint, request, render_template
+from app.data.services.user_service import UserService
 
-user_bp = Blueprint("users", __name__)
+user_bp = Blueprint("users", __name__, template_folder="templates")
 
 
-@user_bp.route("/create_users", methods=["POST"])
+@user_bp.route("/create", methods=["POST"])
 def create_user():
     data = request.get_json()
 
@@ -18,7 +18,7 @@ def create_user():
         return {}, 400
 
 
-@user_bp.route("/delete_users", methods=["POST"])
+@user_bp.route("/delete", methods=["POST"])
 def delete_user():
     data = request.get_json()
 
@@ -29,3 +29,8 @@ def delete_user():
         return {}, 201
     except Exception:
         return {}, 400
+
+
+@user_bp.route("/register", methods=["GET"])
+def register_user():
+    return render_template("index.html")

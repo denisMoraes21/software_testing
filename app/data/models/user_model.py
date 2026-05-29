@@ -1,5 +1,5 @@
 from app.database import db
-from app.models.base_model import BaseModel
+from app.data.models.base_model import BaseModel
 
 
 class UserModel(BaseModel):

@@ -47,6 +47,6 @@ class App:
             with _app.app_context():
                 _database.create_all()
 
-            _app.register_blueprint(user_bp, url_prefix="/api")
+            _app.register_blueprint(user_bp, url_prefix="/users")
 
         return cls.get_instance()

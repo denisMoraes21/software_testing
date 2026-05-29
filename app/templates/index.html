@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Gerenciamento de Usuários</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body>
+
+    <div class="card">
+
+        <h1>Gerenciamento de Usuários</h1>
+
+        <p class="subtitle">
+            Cadastro e remoção de usuários
+        </p>
+
+        <div class="section">
+
+            <h2>Cadastrar usuário</h2>
+
+            <input
+                type="text"
+                id="create-name"
+                placeholder="Digite o nome do usuário"
+            >
+
+            <button
+                id="button-create"
+                onclick="createUser()"
+            >
+                Cadastrar
+            </button>
+
+        </div>
+
+        <div class="section">
+
+            <h2>Deletar usuário</h2>
+
+            <input
+                type="number"
+                id="delete-id"
+                placeholder="Digite o ID do usuário"
+            >
+
+            <button
+                id="button-delete"
+                onclick="deleteUser()"
+            >
+                Deletar
+            </button>
+
+        </div>
+
+    </div>
+
+    <script
+        src="{{ url_for('static', filename='js/users.js') }}">
+    </script>
+
+</body>
+
+</html>
