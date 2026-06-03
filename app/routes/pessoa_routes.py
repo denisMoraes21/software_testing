@@ -1,45 +1,48 @@
-from flask import Blueprint, request, jsonify
-from app.database import db, Pessoa
+from flask import Blueprint, request, render_template
+from app.data.services.pessoas_services import PessoaService
 
-pessoa_bp = Blueprint("pessoa_bp", __name__)
-
-
-@pessoa_bp.route("/", methods=["GET"])
-def listar_pessoas():
-
-    pessoas = Pessoa.query.all()
-
-    lista = []
-
-    for pessoa in pessoas:
-        lista.append({
-            "id": pessoa.id,
-            "nome_completo": pessoa.nome_completo,
-            "cpf": pessoa.cpf,
-            "data_nascimento": pessoa.data_nascimento,
-            "sexo": pessoa.sexo,
-            "estado_civil": pessoa.estado_civil,
-            "nacionalidade": pessoa.nacionalidade
-        })
-
-    return jsonify(lista)
+pessoa_bp = Blueprint(
+    "pessoas", __name__, template_folder="templates")
 
 
-@pessoa_bp.route("/criar", methods=["GET"])
-def criar_pessoa_teste():
+@pessoa_bp.route("/create", methods=["POST"])
+def create_pessoa():
+    print("Rota create_pessoa chamada")
 
-    pessoa = Pessoa(
-        nome_completo="João Silva",
-        cpf="123.456.789-00",
-        data_nascimento="01/01/2000",
-        sexo="Masculino",
-        estado_civil="Solteiro",
-        nacionalidade="Brasileiro"
-    )
+    data = request.get_json()
 
-    db.session.add(pessoa)
-    db.session.commit()
+    print(data)
 
-    return jsonify({
-        "message": "Pessoa criada com sucesso"
-    })
+    try:
+
+        pessoa = PessoaService.create_pessoa(
+            nome_completo=data["nome_completo"],
+            cpf=data["cpf"],
+            data_nascimento=data["data_nascimento"],
+            sexo=data["sexo"],
+            estado_civil=data["estado_civil"],
+            nacionalidade=data["nacionalidade"],
+            telefone=data["telefone"],
+            celular=data["celular"],
+            email=data["email"],
+            cep=data["cep"],
+            logradouro=data["logradouro"],
+            numero=data["numero"],
+            complemento=data["complemento"],
+            bairro=data["bairro"],
+            cidade=data["cidade"],
+            estado=data["estado"]
+        )
+
+        return pessoa.to_dict(), 201
+
+    except Exception as error:
+
+        return {
+            "error": str(error)
+        }, 401
+
+
+@pessoa_bp.route("/register", methods=["GET"])
+def register_pessoa():
+    return render_template("index.html")

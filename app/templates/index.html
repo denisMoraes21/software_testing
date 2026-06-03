@@ -2,69 +2,207 @@
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
 
-    <title>Gerenciamento de Usuários</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Cadastro de Pessoa Física</title>
 
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='css/style.css') }}"
     >
+
 </head>
 
 <body>
 
-    <div class="card">
+<div class="card">
 
-        <h1>Gerenciamento de Usuários</h1>
+    <h1>Cadastro de Pessoa Física</h1>
 
-        <p class="subtitle">
-            Cadastro e remoção de usuários
-        </p>
+    <p class="subtitle">
+        Preencha os dados para realizar o cadastro
+    </p>
 
-        <div class="section">
+    <div class="section">
 
-            <h2>Cadastrar usuário</h2>
+        <h2>Dados Pessoais</h2>
+
+        <input
+            type="text"
+            id="nome_completo"
+            placeholder="Nome completo"
+        >
+
+        <div class="row">
 
             <input
                 type="text"
-                id="create-name"
-                placeholder="Digite o nome do usuário"
+                id="cpf"
+                placeholder="CPF"
             >
-
-            <button
-                id="button-create"
-                onclick="createUser()"
-            >
-                Cadastrar
-            </button>
-
-        </div>
-
-        <div class="section">
-
-            <h2>Deletar usuário</h2>
 
             <input
-                type="number"
-                id="delete-id"
-                placeholder="Digite o ID do usuário"
+                type="date"
+                id="data_nascimento"
             >
-
-            <button
-                id="button-delete"
-                onclick="deleteUser()"
-            >
-                Deletar
-            </button>
 
         </div>
+
+        <div class="row">
+
+            <select id="sexo">
+
+                <option value="">
+                    Sexo
+                </option>
+
+                <option value="Masculino">
+                    Masculino
+                </option>
+
+                <option value="Feminino">
+                    Feminino
+                </option>
+
+                <option value="Outro">
+                    Outro
+                </option>
+
+            </select>
+
+            <select id="estado_civil">
+
+                <option value="">
+                    Estado Civil
+                </option>
+
+                <option value="Solteiro">
+                    Solteiro
+                </option>
+
+                <option value="Casado">
+                    Casado
+                </option>
+
+                <option value="Divorciado">
+                    Divorciado
+                </option>
+
+                <option value="Viúvo">
+                    Viúvo
+                </option>
+
+            </select>
+
+        </div>
+
+        <input
+            type="text"
+            id="nacionalidade"
+            placeholder="Nacionalidade"
+        >
+
+        <h2>Contato</h2>
+
+        <div class="row">
+
+            <input
+                type="text"
+                id="telefone"
+                placeholder="Telefone"
+            >
+
+            <input
+                type="text"
+                id="celular"
+                placeholder="Celular"
+            >
+
+        </div>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="E-mail"
+        >
+
+        <h2>Endereço</h2>
+
+        <div class="row">
+
+            <input
+                type="text"
+                id="cep"
+                placeholder="CEP"
+            >
+
+            <input
+                type="text"
+                id="logradouro"
+                placeholder="Logradouro"
+            >
+
+        </div>
+
+        <div class="row">
+
+            <input
+                type="text"
+                id="numero"
+                placeholder="Número"
+            >
+
+            <input
+                type="text"
+                id="complemento"
+                placeholder="Complemento"
+            >
+
+        </div>
+
+        <div class="row">
+
+            <input
+                type="text"
+                id="bairro"
+                placeholder="Bairro"
+            >
+
+            <input
+                type="text"
+                id="cidade"
+                placeholder="Cidade"
+            >
+
+            <input
+                type="text"
+                id="estado"
+                placeholder="UF"
+                maxlength="2"
+            >
+
+        </div>
+
+        <button
+            id="button-create"
+            onclick="createPessoa()"
+        >
+            Cadastrar Pessoa
+        </button>
 
     </div>
 
-    <script
-        src="{{ url_for('static', filename='js/users.js') }}">
-    </script>
+</div>
+
+<script
+    src="{{ url_for('static', filename='js/pessoas.js') }}"
+></script>
 
 </body>
 
