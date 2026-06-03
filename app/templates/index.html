@@ -1,71 +1,64 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
-
-    <title>Gerenciamento de Usuários</title>
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='css/style.css') }}"
-    >
+    <title>Urna Eletrônica Avançada</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <body>
-
-    <div class="card">
-
-        <h1>Gerenciamento de Usuários</h1>
-
-        <p class="subtitle">
-            Cadastro e remoção de usuários
-        </p>
-
-        <div class="section">
-
-            <h2>Cadastrar usuário</h2>
-
-            <input
-                type="text"
-                id="create-name"
-                placeholder="Digite o nome do usuário"
-            >
-
-            <button
-                id="button-create"
-                onclick="createUser()"
-            >
-                Cadastrar
-            </button>
-
-        </div>
-
-        <div class="section">
-
-            <h2>Deletar usuário</h2>
-
-            <input
-                type="number"
-                id="delete-id"
-                placeholder="Digite o ID do usuário"
-            >
-
-            <button
-                id="button-delete"
-                onclick="deleteUser()"
-            >
-                Deletar
-            </button>
-
-        </div>
-
+    <div id="tela-menu" class="container-centralizado">
+        <h2>Escolha o cargo para votar:</h2>
+        <p>Você deve votar nos três cargos para encerrar a sessão.</p>
+        <button id="btn-Prefeito" class="btn-cargo" onclick="iniciarVotacao('Prefeito')">Prefeito</button>
+        <button id="btn-Governador" class="btn-cargo" onclick="iniciarVotacao('Governador')">Governador</button>
+        <button id="btn-Presidente" class="btn-cargo" onclick="iniciarVotacao('Presidente')">Presidente</button>
     </div>
 
-    <script
-        src="{{ url_for('static', filename='js/users.js') }}">
-    </script>
+    <div id="tela-urna" class="urna" style="display: none;">
+        <div class="painel-lateral">
+            <h3>Candidatos (<span id="nome-cargo-lista"></span>)</h3>
+            <ul id="lista-candidatos"></ul>
+        </div>
 
+        <div class="tela">
+            <div id="topo-tela">
+                <div id="texto-seu-voto-para">SEU VOTO PARA</div>
+                <div id="cargo"></div>
+            </div>
+            <div id="info-candidato">
+                <div id="numeros"></div>
+                <div id="descricao-candidato"></div>
+            </div>
+            <div id="foto-candidato-container"></div>
+            <div id="instrucoes">CONFIRMA para CONFIRMAR<br>CORRIGE para REINICIAR</div>
+        </div>
+
+        <div class="teclado">
+            <div class="linha-teclado">
+                <button onclick="clicou('1')">1</button><button onclick="clicou('2')">2</button><button onclick="clicou('3')">3</button>
+            </div>
+            <div class="linha-teclado">
+                <button onclick="clicou('4')">4</button><button onclick="clicou('5')">5</button><button onclick="clicou('6')">6</button>
+            </div>
+            <div class="linha-teclado">
+                <button onclick="clicou('7')">7</button><button onclick="clicou('8')">8</button><button onclick="clicou('9')">9</button>
+            </div>
+            <div class="linha-teclado"><button onclick="clicou('0')">0</button></div>
+            <div class="linha-teclado acoes">
+                <button class="btn-branco" onclick="branco()">BRANCO</button>
+                <button class="btn-corrige" onclick="corrige()">CORRIGE</button>
+                <button class="btn-confirma" onclick="confirma()">CONFIRMA</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="tela-relatorio" class="container-centralizado" style="display: none;">
+        <h2>Votação Encerrada</h2>
+        <button class="btn-cargo" onclick="imprimirRelatorio()">Imprimir Relatório de Votos</button>
+        <div id="tabela-relatorio"></div>
+        <button class="btn-corrige" onclick="location.reload()" style="margin-top: 20px;">Nova Sessão de Votação</button>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
-
 </html>

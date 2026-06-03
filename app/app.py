@@ -1,52 +1,17 @@
-from flask import Flask
-from app.database import db
-from enum import StrEnum
-from app.routes.user_routes import user_bp
+# app/app.py
+from flask import Flask, render_template
+from app.database import init_db
+from app.routes.urna_routes import urna_bp
 
+def create_app():
+    app = Flask(__name__)
+    init_db() # Garante que o banco e as tabelas existem
 
-class DatabaseConfig(StrEnum):
-    URI = "SQLALCHEMY_DATABASE_URI"
-    MODIFICATIONS = "SQLALCHEMY_TRACK_MODIFICATIONS"
+    # Registra as rotas
+    app.register_blueprint(urna_bp)
 
-    DATABASE_FILE = "app"
-    DATABASE_URI = f"sqlite:///{DATABASE_FILE}.db"
+    @app.route('/')
+    def index():
+        return render_template('index.html')
 
-
-class App:
-    _class_instance = None
-    _app_instance = None
-
-    @classmethod
-    def get_instance(cls):
-        return cls._class_instance
-
-    @classmethod
-    def set_instance(cls, class_instance):
-        cls._class_instance = class_instance
-
-    @classmethod
-    def get_app(cls):
-        return cls._app_instance
-
-    @classmethod
-    def set_app(cls, app_object):
-        cls._app_instance = app_object
-
-    def __new__(cls):
-        if cls.get_instance() is None:
-            cls.set_instance(super(App, cls).__new__(cls))
-            cls.set_app(Flask(__name__))
-
-            _app = cls.get_app()
-            _app.config[DatabaseConfig.URI] = DatabaseConfig.DATABASE_URI
-            _app.config[DatabaseConfig.MODIFICATIONS] = False
-
-            _database = db
-            _database.init_app(_app)
-
-            with _app.app_context():
-                _database.create_all()
-
-            _app.register_blueprint(user_bp, url_prefix="/users")
-
-        return cls.get_instance()
+    return app
