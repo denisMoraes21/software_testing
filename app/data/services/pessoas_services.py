@@ -16,19 +16,21 @@ class PessoaService:
 
         nome = dados["nome_completo"].strip()
 
+        partes_nome = nome.split()
+
+        if len(partes_nome) < 2:
+            raise Exception(
+                "Informe nome e sobrenome"
+            )
+
         if len(nome) < 5:
             raise Exception(
                 "Nome muito curto"
             )
 
-        if " " not in nome:
-            raise Exception(
-                "Informe nome e sobrenome"
-            )
-
         if any(
-            char.isdigit()
-            for char in nome
+                char.isdigit()
+                for char in nome
         ):
             raise Exception(
                 "Nome não pode conter números"
@@ -53,14 +55,15 @@ class PessoaService:
                 "Data de nascimento inválida"
             )
 
-        # E-mail
-
         email = dados["email"].strip()
 
+        # print("Validando EMAIL:", email)
+
         if (
-            "@" not in email
-            or email.startswith("@")
-            or email.endswith("@")
+                "@" not in email
+                or "." not in email
+                or email.startswith("@")
+                or email.endswith("@")
         ):
             raise Exception(
                 "E-mail inválido"
@@ -77,8 +80,8 @@ class PessoaService:
         )
 
         if (
-            not telefone.isdigit()
-            or len(telefone) < 10
+                not telefone.isdigit()
+                or len(telefone) < 10
         ):
             raise Exception(
                 "Telefone inválido"
@@ -95,11 +98,41 @@ class PessoaService:
         )
 
         if (
-            not celular.isdigit()
-            or len(celular) < 11
+                not celular.isdigit()
+                or len(celular) < 11
         ):
             raise Exception(
                 "Celular inválido"
+            )
+
+        cidade = dados["cidade"].strip()
+
+        if len(cidade) < 3:
+            raise Exception(
+                "Cidade inválida"
+            )
+
+        if any(
+                char.isdigit()
+                for char in cidade
+        ):
+            raise Exception(
+                "Cidade inválida"
+            )
+
+        nacionalidade = dados["nacionalidade"].strip()
+
+        if len(nacionalidade) < 3:
+            raise Exception(
+                "Nacionalidade inválida"
+            )
+
+        if any(
+                char.isdigit()
+                for char in nacionalidade
+        ):
+            raise Exception(
+                "Nacionalidade inválida"
             )
 
         # CEP
@@ -110,11 +143,18 @@ class PessoaService:
         )
 
         if (
-            not cep.isdigit()
-            or len(cep) != 8
+                not cep.isdigit()
+                or len(cep) != 8
         ):
             raise Exception(
                 "CEP inválido"
+            )
+
+        bairro = dados["bairro"].strip()
+
+        if len(bairro) < 3:
+            raise Exception(
+                "Bairro inválido"
             )
 
         # UF
@@ -129,12 +169,19 @@ class PessoaService:
         ]
 
         if (
-            dados["estado"]
-            .upper()
-            not in ufs
+                dados["estado"]
+                        .upper()
+                not in ufs
         ):
             raise Exception(
                 "UF inválida"
+            )
+
+        logradouro = dados["logradouro"].strip()
+
+        if len(logradouro) < 3:
+            raise Exception(
+                "Logradouro inválido"
             )
 
         # CPF
@@ -142,7 +189,7 @@ class PessoaService:
         validador_cpf = CPF()
 
         if not validador_cpf.validate(
-            dados["cpf"]
+                dados["cpf"]
         ):
             raise Exception(
                 "CPF inválido"
@@ -160,8 +207,6 @@ class PessoaService:
             raise Exception(
                 "CPF já cadastrado"
             )
-
-        # E-mail já cadastrado
 
         email_existente = (
             PessoaRepository.get_by_email(
