@@ -33,6 +33,9 @@ class TestPessoaIntegration(unittest.TestCase):
             "estado": "AM"
         }
 
+    def tearDown(self):
+        pass
+
     def test_cpf_invalido(self):
         payload = self.payload.copy()
         payload["cpf"] = "12345678900"
