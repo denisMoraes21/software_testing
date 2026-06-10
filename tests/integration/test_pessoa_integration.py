@@ -7,13 +7,6 @@ from app.data.models.pessoas_model import PessoaModel
 class TestPessoaIntegration(unittest.TestCase):
 
     def setUp(self):
-        self.app = App().get_app()
-        self.client = self.app.test_client()
-
-        with self.app.app_context():
-            PessoaModel.query.delete()
-            db.session.commit()
-
         self.payload = {
             "nome_completo": "Joao Silva",
             "cpf": "52998224725",
@@ -34,7 +27,12 @@ class TestPessoaIntegration(unittest.TestCase):
         }
 
     def tearDown(self):
-        pass
+        self.app = App().get_app()
+        self.client = self.app.test_client()
+
+        with self.app.app_context():
+            PessoaModel.query.delete()
+            db.session.commit()
 
     def test_cpf_invalido(self):
         payload = self.payload.copy()
