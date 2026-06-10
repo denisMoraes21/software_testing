@@ -2,24 +2,39 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Urna Eletrônica Avançada</title>
+    <title>Urna e Painel de Controle</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div id="tela-menu" class="container-centralizado">
-        <h2>Escolha o cargo para votar:</h2>
+    <!-- TELA ADMIN: GERENCIAR ELEITORES -->
+    <div id="tela-admin" class="container-centralizado">
+        <h2>Área do Mesário: Eleitores</h2>
+        <div style="margin-bottom: 20px;">
+            <input type="text" id="novo-eleitor" placeholder="Nome do Eleitor" style="padding: 10px; width: 60%;">
+            <button onclick="adicionarEleitor()" class="btn-acao">Adicionar</button>
+        </div>
+        <table border="1" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+            <thead><tr><th>Nome</th><th>Ações (Auditoria)</th><th>Votar</th></tr></thead>
+            <tbody id="tabela-eleitores"></tbody>
+        </table>
+        <button class="btn-cargo" onclick="imprimirRelatorio(null)">Imprimir Votos Gerais da Eleição</button>
+    </div>
+
+    <!-- TELA MENU DE CARGOS -->
+    <div id="tela-menu" class="container-centralizado" style="display: none;">
+        <h2>Eleitor: <span id="nome-eleitor-atual"></span></h2>
         <p>Você deve votar nos três cargos para encerrar a sessão.</p>
         <button id="btn-Prefeito" class="btn-cargo" onclick="iniciarVotacao('Prefeito')">Prefeito</button>
         <button id="btn-Governador" class="btn-cargo" onclick="iniciarVotacao('Governador')">Governador</button>
         <button id="btn-Presidente" class="btn-cargo" onclick="iniciarVotacao('Presidente')">Presidente</button>
     </div>
 
+    <!-- TELA DA URNA ELETRÔNICA (Mantida igual, apenas adicionei ID) -->
     <div id="tela-urna" class="urna" style="display: none;">
         <div class="painel-lateral">
             <h3>Candidatos (<span id="nome-cargo-lista"></span>)</h3>
             <ul id="lista-candidatos"></ul>
         </div>
-
         <div class="tela">
             <div id="topo-tela">
                 <div id="texto-seu-voto-para">SEU VOTO PARA</div>
@@ -32,17 +47,10 @@
             <div id="foto-candidato-container"></div>
             <div id="instrucoes">CONFIRMA para CONFIRMAR<br>CORRIGE para REINICIAR</div>
         </div>
-
         <div class="teclado">
-            <div class="linha-teclado">
-                <button onclick="clicou('1')">1</button><button onclick="clicou('2')">2</button><button onclick="clicou('3')">3</button>
-            </div>
-            <div class="linha-teclado">
-                <button onclick="clicou('4')">4</button><button onclick="clicou('5')">5</button><button onclick="clicou('6')">6</button>
-            </div>
-            <div class="linha-teclado">
-                <button onclick="clicou('7')">7</button><button onclick="clicou('8')">8</button><button onclick="clicou('9')">9</button>
-            </div>
+            <div class="linha-teclado"><button onclick="clicou('1')">1</button><button onclick="clicou('2')">2</button><button onclick="clicou('3')">3</button></div>
+            <div class="linha-teclado"><button onclick="clicou('4')">4</button><button onclick="clicou('5')">5</button><button onclick="clicou('6')">6</button></div>
+            <div class="linha-teclado"><button onclick="clicou('7')">7</button><button onclick="clicou('8')">8</button><button onclick="clicou('9')">9</button></div>
             <div class="linha-teclado"><button onclick="clicou('0')">0</button></div>
             <div class="linha-teclado acoes">
                 <button class="btn-branco" onclick="branco()">BRANCO</button>
@@ -52,11 +60,11 @@
         </div>
     </div>
 
+    <!-- TELA DE RELATÓRIO -->
     <div id="tela-relatorio" class="container-centralizado" style="display: none;">
-        <h2>Votação Encerrada</h2>
-        <button class="btn-cargo" onclick="imprimirRelatorio()">Imprimir Relatório de Votos</button>
+        <h2 id="titulo-relatorio">Relatório</h2>
         <div id="tabela-relatorio"></div>
-        <button class="btn-corrige" onclick="location.reload()" style="margin-top: 20px;">Nova Sessão de Votação</button>
+        <button class="btn-corrige" onclick="voltarAdmin()" style="margin-top: 20px;">Voltar ao Painel</button>
     </div>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
